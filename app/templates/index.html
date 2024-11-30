@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Transactions</h2>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Delete</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr>
+        <td>{{ transaction.date }}</td>
+        <td>{{ transaction.type }}</td>
+        <td>{{ transaction.category }}</td>
+        <td>${{ transaction.amount }}</td>
+        <td>
+            <p>{{ transaction.id }}</p> <!-- Debugging ke liye id display karein -->
+            <!-- Delete button -->
+            <form action="{{ url_for('main.delete_transaction', transaction_id=transaction.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Spending Trend (Bar Chart)</h3>
+<canvas id="spendingChart" width="400" height="200"></canvas>
+
+<script>
+    const transactions = {{ transactions | tojson | safe }};
+    console.log(transactions); // This should work now
+    
+    // Category-wise spending calculate karein
+    const categoryData = {};
+    transactions.forEach(transaction => {
+        const category = transaction.category;
+        const amount = parseFloat(transaction.amount);
+        categoryData[category] = (categoryData[category] || 0) + amount;
+    });
+
+    console.log(categoryData);  // Debugging ke liye category-wise spending print karenge
+
+    // Labels aur Data arrays prepare karein
+    const labels = Object.keys(categoryData);
+    const dataValues = Object.values(categoryData);
+
+    // Chart data configuration
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Spending Trend',
+            data: dataValues,
+            backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#F4FF33', '#FF33A1'], // Add more colors if needed
+        }]
+    };
+
+    // Chart configuration
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    };
+
+    // Bar chart render karein
+    const spendingChart = new Chart(
+        document.getElementById('spendingChart'),
+        config
+    );
+</script>
+{% endblock %}

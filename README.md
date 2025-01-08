@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 **Introduction**
 The Personal Finance Tracker is a web application designed to help users manage their finances by tracking income and expenses, visualizing spending trends, and setting budget goals. This project aims to make personal finance management simple and efficient through an intuitive interface and insightful data visualization.
 
@@ -57,8 +57,6 @@ Access the app at http://127.0.0.1:5000/ in your browser.
 ## Contact Information
 For any questions, feedback, or suggestions, contact:
 📧 [sneha678598@gmail.com]
-💼 [Your linkedin.com/in/Sneha or https://github.com/sneha678598 ]
-=======
+💼 [Your linkedin.com/in/Sneha or https://github.com/sneha678598 
 # Second-Project2
 Personal Finance Tracker
->>>>>>> 4b406c519a5953ae533fe824e286fcd68cd3f88a
